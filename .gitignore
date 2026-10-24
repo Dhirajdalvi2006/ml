@@ -1,0 +1,22 @@
+# Python virtual environments
+.venv/
+venv/
+env/
+
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Local tooling and generated files
+.ipynb_checkpoints/
+*.log
+*.tmp
+*.bak
