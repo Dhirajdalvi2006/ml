@@ -20,7 +20,10 @@ print("Original Dataset:\n", df)
 imputer = SimpleImputer(strategy='mean')
 df[['Age', 'Salary']] = imputer.fit_transform(df[['Age', 'Salary']])
 
-# 3. Feature Encoding: Convert categorical text to numeric values
+# 3. Data Transformation: express salary in thousands
+df['Salary'] = df['Salary'] / 1000
+
+# 4. Feature Encoding: Convert categorical text to numeric values
 df['City'] = LabelEncoder().fit_transform(df['City'])
 df['Purchased'] = LabelEncoder().fit_transform(df['Purchased'])
 print("\nEncoded Dataset:\n", df)

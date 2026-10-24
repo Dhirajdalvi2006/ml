@@ -20,9 +20,9 @@ vectorizer = CountVectorizer()
 X = vectorizer.fit_transform(emails)
 
 # 3. Train-test split
-X_train, X_test, y_train, y_test = train_test_split(X, X, test_size=0.25, random_state=42) # Wait, let's fix X, y split properly!
-# Correction:
-X_train, X_test, y_train, y_test = train_test_split(X, labels, test_size=0.25, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(
+    X, labels, test_size=0.25, random_state=42, stratify=labels
+)
 
 # 4. Train Naïve Bayes model
 model = MultinomialNB()

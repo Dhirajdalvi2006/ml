@@ -14,7 +14,7 @@ X, y = data.data, data.target
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 # 3. Initialize and train Logistic Regression model
-model = LogisticRegression(max_iter=200)
+model = LogisticRegression(solver='liblinear', max_iter=200)
 model.fit(X_train, y_train)
 
 # 4. Predict and evaluate

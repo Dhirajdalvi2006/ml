@@ -2,27 +2,23 @@
 # Discovers frequent itemsets and identifies outliers in dataset.
 
 import pandas as pd
+from itertools import combinations
 from sklearn.ensemble import IsolationForest
 
-# 1. Frequent Itemsets (Simple Apriori / Market Basket Analysis concept)
+# 1. Frequent Itemsets using a simple Apriori approach
 transactions = [
-    ['Milk', 'Bread', 'Butter'],
-    ['Bread', 'Butter'],
-    ['Milk', 'Bread'],
-    ['Milk', 'Butter'],
-    ['Bread', 'Butter']
+    ['Milk', 'Bread', 'Butter'], ['Bread', 'Butter'],
+    ['Milk', 'Bread'], ['Milk', 'Butter'], ['Bread', 'Butter']
 ]
+min_support = 2
+items = sorted({item for trans in transactions for item in trans})
 
-# Calculate item frequencies (Support)
-item_counts = {}
-for trans in transactions:
-    for item in trans:
-        item_counts[item] = item_counts.get(item, 0) + 1
-
-print("Frequent Item Support Counts:")
-for item, count in item_counts.items():
-    if count >= 2:  # Min support threshold
-        print(f"- {item}: {count}")
+print("Frequent Itemsets:")
+for size in range(1, len(items) + 1):
+    for itemset in combinations(items, size):
+        support = sum(set(itemset).issubset(trans) for trans in transactions)
+        if support >= min_support:
+            print(f"- {itemset}: support = {support}")
 
 # 2. Outlier Detection using Isolation Forest
 # Dataset with normal values around 2.0 and an extreme outlier (20.0)
