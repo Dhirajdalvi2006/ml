@@ -1,20 +1,26 @@
-# Practical 4: Naive Bayes Spam Classification
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import MultinomialNB
-from sklearn.metrics import accuracy_score, classification_report
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
 
-emails = [
-    'Win a free iPhone now click here', 'Hi Bob, meeting at 3pm today',
-    'Congratulations you won lottery cash prize', 'Project report attached review please',
-    'Claim your free gift card urgently', 'Can we reschedule our call tomorrow?',
-    'Get cheap meds without prescription', 'Do not forget to submit your assignment'
+X = [
+    "win money now", "claim your prize", "free offer",
+    "hello friend", "meeting tomorrow", "good morning",
+    "win a free prize", "let us meet today",
+    "claim free money", "see you tomorrow"
 ]
-labels = [1, 0, 1, 0, 1, 0, 1, 0]
-X = CountVectorizer().fit_transform(emails)
+y = [1, 1, 1, 0, 0, 0, 1, 0, 1, 0]
+
+v = CountVectorizer()
+X = v.fit_transform(X)
+
 X_train, X_test, y_train, y_test = train_test_split(
-    X, labels, test_size=.25, random_state=42, stratify=labels
+    X, y, test_size=0.3, random_state=42, stratify=y
 )
-pred = MultinomialNB().fit(X_train, y_train).predict(X_test)
-print('Accuracy:', accuracy_score(y_test, pred))
-print('\nReport:\n', classification_report(y_test, pred, zero_division=0))
+
+m = MultinomialNB().fit(X_train, y_train)
+p = m.predict(X_test)
+
+print("Prediction:", ["Spam" if i else "Not Spam" for i in p])
+print("Accuracy:", accuracy_score(y_test, p))
+print("New Message:", "Spam" if m.predict(v.transform(["win free money"]))[0] else "Not Spam")
