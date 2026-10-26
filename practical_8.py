@@ -11,6 +11,6 @@ plt.plot(x, np.tanh(x), label="Tanh")
 plt.title("Activation Functions")
 plt.xlabel("Input")
 plt.ylabel("Output")
-plt.legend()
+
 plt.grid()
 plt.show()
